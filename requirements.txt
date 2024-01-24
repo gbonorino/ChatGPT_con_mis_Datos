@@ -4,3 +4,9 @@ langchain==0.1.0
 streamlit==1.30.0
 faiss-cpu==1.7.4
 tiktoken==0.5.2
+langchain_openai
+huggingface_hub
+sentence_transformers 
+chromadb==0.3.29
+pypdf
+langchain-community

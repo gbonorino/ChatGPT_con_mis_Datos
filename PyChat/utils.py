@@ -1,6 +1,6 @@
 from langchain.prompts import ChatPromptTemplate, PromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from langchain.llms import OpenAI, HuggingFaceHub
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI  
 from langchain.chains import LLMChain, ConversationalRetrievalChain
 from langchain.embeddings import OpenAIEmbeddings, HuggingFaceHubEmbeddings
 from langchain.schema.output_parser import StrOutputParser
@@ -20,8 +20,7 @@ import pandas as pd
 # Might be useful for turning sentences into questions
 _template = """Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language.
 
-Chat History:
-{chat_history}
+Chat History: {chat_history}
 Follow Up Input: {question}
 Standalone question:"""
 CONDENSE_QUESTION_PROMPT = PromptTemplate.from_template(_template)
@@ -31,6 +30,7 @@ template = """Answer the question based only on the following context:
 
 Question: {question}
 """
+
 ANSWER_PROMPT = ChatPromptTemplate.from_template(template)
 DEFAULT_DOCUMENT_PROMPT = PromptTemplate.from_template(template="{page_content}")
 #--
@@ -44,12 +44,12 @@ def load_docs():
     econ_docs = loader.load()
     return econ_docs
 
-def load_model(provider):
+def load_model(provider):   # Inicializar el modelo
     if provider == "OpenAI":
         model = ChatOpenAI(model='gpt-3.5-turbo', temperature=0.8, max_tokens=300)
     elif provider == "HuggingFace":
         model = HuggingFaceHub(repo_id="google/flan-t5-base", 
-                                         model_kwargs={"temperature": 0.6, "max_length": 200})
+                model_kwargs={"temperature": 0.6, "max_length": 200})
         
     return model
     
@@ -68,7 +68,7 @@ def build_chat_chain(provider="OpenAI"):
     system_template = SystemMessagePromptTemplate.from_template("{system_prompt}")
     human_template = HumanMessagePromptTemplate.from_template("{chat_history}")
 
-    # create the list of messages
+    # ChatPromptTemplate
     chat_prompt = ChatPromptTemplate.from_messages([
         system_template,
         human_template
